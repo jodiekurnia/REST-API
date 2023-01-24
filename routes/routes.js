@@ -48,7 +48,7 @@ router.get('/update/:serverid/:status', async (req, res) => {
         const options = { new: true };
 
         const result = await Model.findByIdAndUpdate(
-            id, updatedData, options
+            serverid, updatedData, options
         )
 
         res.send(result)
