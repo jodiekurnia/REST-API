@@ -19,6 +19,9 @@ app.use(express.json());
 const routes = require('./routes/routes');
 
 app.use('/api', routes)
+app.use('/', (req, res) => {
+    res.send('Simple API')
+})
 
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`)
