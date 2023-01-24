@@ -29,6 +29,17 @@ router.get('/getAll', async (req, res) => {
     }
 })
 
+//Get all Exclude ID
+router.get('/getAllEx/:serverid', async (req, res) => {
+    try {
+        const data = await Model.find({serverid: {$ne: req.params.serverid }}).select('serverid status -_id');
+        res.json(data)
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
 //Get by ID Method
 router.get('/getOne/:id', async (req, res) => {
     try {
