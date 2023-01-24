@@ -3,7 +3,7 @@ const Model = require('../models/model');
 const router = express.Router();
 
 //Post
-router.get('/:serverid/:status', async (req, res) => {
+router.get('/post/:serverid/:status', async (req, res) => {
     const data = new Model({
         serverid: req.params.serverid,
         status: req.params.status
@@ -40,11 +40,11 @@ router.get('/getOne/:id', async (req, res) => {
     }
 })
 
-//Update by ID Method
-router.patch('/update/:id', async (req, res) => {
+//Update by serverid
+router.get('/update/:serverid/:status', async (req, res) => {
     try {
-        const id = req.params.id;
-        const updatedData = req.body;
+        const serverid = req.params.serverid;
+        const updatedData = { "status": req.params.status };
         const options = { new: true };
 
         const result = await Model.findByIdAndUpdate(
