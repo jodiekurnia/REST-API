@@ -43,12 +43,9 @@ router.get('/getOne/:id', async (req, res) => {
 //Update by serverid
 router.get('/update/:serverid/:status', async (req, res) => {
     try {
-        const serverid = req.params.serverid;
-        const updatedData = { "status": req.params.status };
-        const options = { new: true };
-
-        const result = await Model.findByIdAndUpdate(
-            serverid, updatedData, options
+        
+        const result = await Model.findOneAndUpdate(
+            { serverid: req.params.serverid }, { status: req.params.status }
         )
 
         res.send(result)
