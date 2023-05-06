@@ -1,5 +1,6 @@
 const express = require('express');
 const Model = require('../models/model');
+const Accounts = require('../models/accounts');
 const router = express.Router();
 
 //Post
@@ -78,4 +79,19 @@ router.delete('/delete/:id', async (req, res) => {
     }
 })
 
+
+router.post('/accounts', async (req, res) => {
+    const account = new Accounts({
+        email: req.body.email,
+        password: req.body.password,
+        created_ip: req.body.created_ip
+    });
+    try {
+        const dataToSave = await data.save();
+        res.status(200).json(dataToSave)
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+});
 module.exports = router;
