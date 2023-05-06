@@ -87,7 +87,7 @@ router.post('/accounts', async (req, res) => {
         created_ip: req.body.created_ip
     });
     try {
-        const dataToSave = await data.save();
+        const dataToSave = await account.save();
         res.status(200).json(dataToSave)
     }
     catch (error) {
