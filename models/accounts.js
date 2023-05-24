@@ -7,7 +7,6 @@ const accountSchema = new Schema({
     password : {type: String,required: true},
     createdAt: {type: Date, default: Date.now, immutable: true},
     updatedAt: {type: Date, default: Date.now},
-    created_ip: {type: String, default: null},
     lastUsed:  {type: Date, default: null},
     successSubs: {type: Boolean, default: false},
 }, {collection: 'accounts'});
