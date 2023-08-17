@@ -79,7 +79,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 })
 
-
+/* This is New, All Accounts */
 router.post('/accounts', async (req, res) => {
     const account = new Accounts({
         email: req.body.email,
@@ -93,4 +93,14 @@ router.post('/accounts', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 });
+router.get('/accounts/:subs', async (req, res) => {
+    try {
+        const data = await Accounts.findOne({subs: {$nin: req.params.subs}});
+        res.json(data)
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
+
 module.exports = router;

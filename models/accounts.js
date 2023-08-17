@@ -6,9 +6,7 @@ const accountSchema = new Schema({
     email : {type: String, required: true},
     password : {type: String, required: true},
     createdAt: {type: Date, default: Date.now, immutable: true},
-    updatedAt: {type: Date, default: Date.now},
     subs: {type: Array, default: []},
-    rusak: {type: Boolean, default: false},
 }, {collection: 'accounts'});
 
 accountSchema.virtual('id').get(function () {
