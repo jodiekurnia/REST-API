@@ -81,16 +81,26 @@ router.delete('/delete/:id', async (req, res) => {
 
 /* This is New, All Accounts */
 router.post('/accounts', async (req, res) => {
-    const account = new Accounts({
-        email: req.body.email,
-        password: req.body.password,
-    });
+    const { email, password } = req.body;
+
     try {
+        // Check if an account with the provided email already exists
+        const existingAccount = await Accounts.findOne({ email });
+
+        if (existingAccount) {
+            return res.status(400).json({ message: "Account already exists" });
+        }
+
+        // If the account doesn't exist, create and save the new account
+        const account = new Accounts({
+            email,
+            password,
+        });
+
         const dataToSave = await account.save();
-        res.status(200).json(dataToSave)
-    }
-    catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(200).json(dataToSave);
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred" });
     }
 });
 router.get('/accounts/:subs', async (req, res) => {
