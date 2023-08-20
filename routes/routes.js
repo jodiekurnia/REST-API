@@ -119,7 +119,7 @@ router.post('/accounts/:subs', async (req, res) => {
     try {
         const result = await Accounts.findOneAndUpdate(
             { email: req.body.email },
-            { $push: { subs: subs } },
+            { $push: { subs: req.params.subs } },
             { new: true } // This option returns the updated document
         )
         res.send(result)
