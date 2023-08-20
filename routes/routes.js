@@ -115,5 +115,18 @@ router.get('/accounts/:subs', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 });
+router.post('/accounts/:subs', async (req, res) => {
+    try {
+        const result = await Accounts.findOneAndUpdate(
+            { email: req.body.email },
+            { $push: { subs: subs } },
+            { new: true } // This option returns the updated document
+        )
+        res.send(result)
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
 
 module.exports = router;
