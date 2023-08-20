@@ -106,6 +106,9 @@ router.post('/accounts', async (req, res) => {
 router.get('/accounts/:subs', async (req, res) => {
     try {
         const data = await Accounts.findOne({subs: {$nin: req.params.subs}});
+        if (!data) {
+            return res.status(404).json({ message: "No Account Available" });
+        }
         res.json(data)
     }
     catch (error) {
