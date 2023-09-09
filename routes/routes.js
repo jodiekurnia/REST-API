@@ -1,6 +1,7 @@
 const express = require('express');
 const Model = require('../models/model');
 const Accounts = require('../models/accounts');
+const Wa = require('../models/wa');
 const router = express.Router();
 
 //Post
@@ -134,15 +135,15 @@ router.post('/wa', async (req, res) => {
     const { nomor, wa_id, isBusiness, canReceiveMessage, numberExists } = req.body;
 
     try {
-        // Check if an account with the provided email already exists
-        const existingAccount = await Wa.findOne({ wa_id });
+        // Check if an WA with the provided email already exists
+        const existingWA = await Wa.findOne({ wa_id });
 
-        if (existingAccount) {
-            return res.status(400).json({ message: "Account already exists" });
+        if (existingWA) {
+            return res.status(400).json({ message: "This Number Already Exists" });
         }
 
         // If the account doesn't exist, create and save the new account
-        const account = new Wa({
+        const WA = new Wa({
             nomor,
             wa_id,
             isBusiness,
@@ -150,7 +151,7 @@ router.post('/wa', async (req, res) => {
             numberExists
         });
 
-        const dataToSave = await account.save();
+        const dataToSave = await WA.save();
         res.status(200).json(dataToSave);
     } catch (error) {
         res.status(500).json({ message: "An error occurred" });

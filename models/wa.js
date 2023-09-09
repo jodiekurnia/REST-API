@@ -19,5 +19,5 @@ waSchema.set('toJSON', {
     virtuals: true,
 });
 
-const wa = model('wa', accountSchema);
-module.exports = Account;
+const wa = model('wa', waSchema);
+module.exports = wa;
