@@ -5,7 +5,7 @@ const model = mongoose.model;
 const waSchema = new Schema({
     nomor : {type: Number, required: true},
     wa_id : {type: String, required: true},
-    isBusiness : {type: String, required: true},
+    isBusiness : {type: Boolean, required: true},
     canReceiveMessage: {type: Boolean, required: true},
     numberExists: {type: Boolean, required: true},
     Date: {type: Date, immutable: true, default: Date.now},
