@@ -133,15 +133,12 @@ router.post('/accounts/:subs', async (req, res) => {
 // WA API
 router.post('/wa', async (req, res) => {
     const { nomor, wa_id, isBusiness, canReceiveMessage, numberExists } = req.body;
-
     try {
         // Check if an WA with the provided email already exists
         const existingWA = await Wa.findOne({ wa_id });
-
         if (existingWA) {
-            return res.status(400).json({ message: "This Number Already Exists" });
+            return res.status(400).json({ message: "This Number Already Exists!" });
         }
-
         // If the account doesn't exist, create and save the new account
         const WA = new Wa({
             nomor,
@@ -153,6 +150,18 @@ router.post('/wa', async (req, res) => {
 
         const dataToSave = await WA.save();
         res.status(200).json(dataToSave);
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred" });
+    }
+});
+router.get('/wa/:number', async(req, res) => {
+    const number = req.params.number;
+    try {
+        const data = await Wa.findOne({nomor: number});
+        if (data) {
+            return res.status(400).json({ message: "This Number Already Exists!" });
+        }
+        return res.status(200).json({message: "Account Not Exists!"})
     } catch (error) {
         res.status(500).json({ message: "An error occurred" });
     }
