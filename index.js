@@ -17,12 +17,14 @@ const app = express();
 app.use(express.json());
 
 const routes = require('./routes/routes');
+const chia = require('./routes/chia')
 
-app.use('/api', routes)
+app.use('/api', routes);
+app.use('/chia', chia)
 app.use('/', (req, res) => {
-    res.send('Simple API')
-})
+    res.send('Simple API');
+});
 
 app.listen(3000, () => {
-    console.log(`Server Started at ${3000}`)
-})
+    console.log(`Server Started at ${3000}`);
+});
