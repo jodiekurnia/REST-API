@@ -40,8 +40,8 @@ router.get('/getMaxPlot', async (req, res) => {
 });
 
 // Post Max Plot
-router.get('/setMaxPlot', async (req, res) => {
-  const { maxPlots } = req.query;
+router.get('/setMaxPlot/:maxPlots', async (req, res) => {
+  const { maxPlots } = req.params;
   try {
     const data = maxPlotsModel.findOneAndUpdate(
       { maxPlots },
