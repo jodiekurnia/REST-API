@@ -48,8 +48,7 @@ router.post('/setMaxPlot', async (req, res) => {
       { maxPlots },
       { upsert: true, new: true }
     );
-    const dataToSave = await data.save();
-    res.status(200).json(dataToSave);
+    res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
