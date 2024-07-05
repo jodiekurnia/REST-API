@@ -7,24 +7,24 @@ mongoose.connect(mongoString);
 const database = mongoose.connection;
 
 database.on('error', (error) => {
-    console.log(error)
-})
+  console.log(error);
+});
 
 database.once('connected', () => {
-    console.log('Database Connected');
-})
+  console.log('Database Connected');
+});
 const app = express();
 app.use(express.json());
 
 const routes = require('./routes/routes');
-const chia = require('./routes/chia')
+const chia = require('./routes/chia');
 
 app.use('/api', routes);
-app.use('/chia', chia)
+app.use('/chia', chia);
 app.use('/', (req, res) => {
-    res.send('Simple API');
+  res.send('Simple API');
 });
 
 app.listen(3000, () => {
-    console.log(`Server Started at ${3000}`);
+  console.log(`Server Started at ${3000}`);
 });
