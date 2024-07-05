@@ -43,14 +43,15 @@ router.get('/getMaxPlot', async (req, res) => {
 router.get('/setMaxPlot/:maxPlots', async (req, res) => {
   const { maxPlots } = req.params;
   try {
-    const data = maxPlotsModel.findOneAndUpdate(
-      { maxPlots },
+    const data = await maxPlotsModel.findOneAndUpdate(
+      {},
       { maxPlots },
       { upsert: true, new: true }
     );
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    const message = error.message || 'Internal Server Error';
+    res.status(400).json({ message });
   }
 });
 
