@@ -32,10 +32,14 @@ router.get('/getAll', async (req, res) => {
 // Get Max Plot
 router.get('/getMaxPlot', async (req, res) => {
   try {
-    const data = await maxPlotsModel.find();
-    res.json(data);
+    const data = await maxPlotsModel.findOne();
+    if (data) {
+      res.status(200).json({ status: 'success', maxPlots: data.maxPlots });
+    } else {
+      res.status(404).json({ status: 'error', message: 'No maxPlots found' });
+    }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ status: 'error', message: error.message });
   }
 });
 
