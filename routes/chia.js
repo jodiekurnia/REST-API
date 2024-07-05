@@ -43,9 +43,11 @@ router.get('/getMaxPlot', async (req, res) => {
 router.post('/setMaxPlot', async (req, res) => {
   const { maxPlots } = req.body;
   try {
-    const data = new maxPlotsModel({
-      maxPlots,
-    });
+    const data = maxPlotsModel.findOneAndUpdate(
+      { maxPlots },
+      { maxPlots },
+      { upsert: true, new: true }
+    );
     const dataToSave = await data.save();
     res.status(200).json(dataToSave);
   } catch (error) {
