@@ -18,9 +18,11 @@ app.use(express.json());
 
 const routes = require('./routes/routes');
 const chia = require('./routes/chia');
+const pf = require('./routes/pf');
 
 app.use('/api', routes);
 app.use('/chia', chia);
+app.use('/pf', pf);
 app.use('/', (req, res) => {
   res.send('Simple API');
 });
