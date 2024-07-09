@@ -21,7 +21,7 @@ router.get('/whitelist', async (req, res) => {
 
 // Register WhiteList (Register new user ID)
 router.get('/reg/:userId', async (req, res) => {
-  const { userId } = req.params; // Get userId from URL parameter
+  const userId = Number(req.params.userId); // Convert userId to number
   try {
     const data = await pfModel.findOneAndUpdate(
       {},
