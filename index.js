@@ -27,8 +27,8 @@ app.use("/api", routes);
 app.use("/chia", chia);
 app.use("/pf", pf);
 
-app.use("jodie", jodie);
-app.use("khucuy", khucuy);
+app.use("/jodie", jodie);
+app.use("/khucuy", khucuy);
 
 app.use("/", (req, res) => {
   res.send("Simple API");
