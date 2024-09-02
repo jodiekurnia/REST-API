@@ -1,5 +1,6 @@
 const express = require("express");
 const jodieModel = require("../models/jodieModel");
+const priceModel = require("../models/priceModel");
 const router = express.Router();
 
 // Get list of accounts with status 'fresh' and update their status to 'used'
@@ -116,6 +117,72 @@ router.post("/add", async (req, res) => {
     }
 
     res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Combo EndPoint
+router.post("/combo", async (req, res) => {
+  try {
+    let combo = req.body;
+
+    // Jika data bukan array, ubah menjadi array
+    if (!Array.isArray(combo)) {
+      combo = [combo];
+    }
+
+    // Validasi data
+    if (combo.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "No data provided." });
+    }
+
+    // Query the database for each price in the combo array
+    const urls = await Promise.all(
+      combo.map(async (price) => {
+        const result = await Price.findOne({ price });
+        return result ? result.url : null;
+      })
+    );
+
+    // Remove null values from the results
+    const filteredUrls = urls.filter((url) => url !== null);
+
+    // Check if there are any URLs found
+    if (filteredUrls.length === 0) {
+      return res
+        .status(404)
+        .json({
+          status: "error",
+          message: "No URLs found for the provided prices.",
+        });
+    }
+
+    // Respond with the found URLs
+    res.json({ status: "success", urls: filteredUrls });
+  } catch (error) {
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Add Combo EndPoint
+router.post("/combo/add", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Validasi data
+    if (!Array.isArray(data) || data.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "No valid data provided." });
+    }
+
+    // Insert data into the database
+    await Price.insertMany(data);
+
+    res.json({ status: "success", message: "Data added successfully." });
   } catch (error) {
     res.status(500).json({ status: "error", message: error.message });
   }
