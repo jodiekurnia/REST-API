@@ -142,7 +142,7 @@ router.post("/combo", async (req, res) => {
     // Query the database for each price in the combo array
     const urls = await Promise.all(
       combo.map(async (price) => {
-        const result = await Price.findOne({ price });
+        const result = await priceModel.findOne({ price });
         return result ? result.url : null;
       })
     );
@@ -152,12 +152,10 @@ router.post("/combo", async (req, res) => {
 
     // Check if there are any URLs found
     if (filteredUrls.length === 0) {
-      return res
-        .status(404)
-        .json({
-          status: "error",
-          message: "No URLs found for the provided prices.",
-        });
+      return res.status(404).json({
+        status: "error",
+        message: "No URLs found for the provided prices.",
+      });
     }
 
     // Respond with the found URLs
@@ -180,7 +178,7 @@ router.post("/combo/add", async (req, res) => {
     }
 
     // Insert data into the database
-    await Price.insertMany(data);
+    await priceModel.insertMany(data);
 
     res.json({ status: "success", message: "Data added successfully." });
   } catch (error) {
