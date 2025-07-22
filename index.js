@@ -22,6 +22,7 @@ const pf = require("./routes/pf");
 
 const jodie = require("./routes/jodie");
 const khucuy = require("./routes/khucuy");
+const tevi = require("./routes/tevi");
 
 app.use("/api", routes);
 app.use("/chia", chia);
@@ -29,6 +30,7 @@ app.use("/pf", pf);
 
 app.use("/jodie", jodie);
 app.use("/khucuy", khucuy);
+app.use("/tevi", tevi);
 
 app.use("/", (req, res) => {
   res.send("Simple API");
