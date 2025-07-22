@@ -35,8 +35,8 @@ router.post('/:phone/:cloner', async (req, res) => {
     const clonerNumber = parseInt(req.params.cloner);
     const gmail = req.body; // satu akun gmail
     // Validasi sederhana
-    if (!gmail || !gmail.firstName || !gmail.lastName || !gmail.email || !gmail.password || !gmail.dob || !gmail.dob.month || !gmail.dob.date || !gmail.dob.year) {
-      return res.status(400).json({ message: 'Data gmail tidak lengkap' });
+    if (!gmail || !gmail.email || !gmail.password) {
+      return res.status(400).json({ message: 'Email dan password wajib diisi' });
     }
     let tevi = await Tevi.findOne({ phone });
     // Cek email sudah ada di cloner manapun pada phone ini

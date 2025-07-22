@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const gmailAccountSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
   dob: {
-    month: { type: String, required: true },
-    date: { type: String, required: true },
-    year: { type: String, required: true },
+    month: { type: String },
+    date: { type: String },
+    year: { type: String },
   },
   createdAt: { type: Date, default: Date.now },
 });
