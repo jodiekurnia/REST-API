@@ -39,6 +39,18 @@ router.post('/:phone/:cloner', async (req, res) => {
       return res.status(400).json({ message: 'Data gmail tidak lengkap' });
     }
     let tevi = await Tevi.findOne({ phone });
+    // Cek email sudah ada di cloner manapun pada phone ini
+    if (tevi) {
+      let foundCloner = null;
+      tevi.cloners.forEach(cloner => {
+        if (cloner.gmails.some(g => g.email.toLowerCase() === gmail.email.toLowerCase())) {
+          foundCloner = cloner.clonerNumber;
+        }
+      });
+      if (foundCloner !== null) {
+        return res.status(400).json({ message: `Email sudah terdaftar di phone ${phone} pada cloner ${foundCloner}` });
+      }
+    }
     if (!tevi) {
       // Buat baru jika phone belum ada
       tevi = new Tevi({ phone, cloners: [{ clonerNumber, gmails: [gmail] }] });
